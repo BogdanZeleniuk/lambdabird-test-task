@@ -59,6 +59,10 @@ class Renderer{
 		p.innerHTML = 'The list of authors is: ' + countShouts;
 	 	document.body.appendChild(p);
 	}
+
+	stopEvent(event){
+		event.preventDefault();
+	}
 }
  let countShouts = 0;
  let listAuthors = [];
