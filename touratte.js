@@ -60,7 +60,7 @@ const touratte = new Touratte();
 
 let randomNumber = touratte.getRandomNumber();
 
-let randomInterval = touratte.getRandomInterval(1, 5);
+const randomInterval = touratte.getRandomInterval(1, 5);
 
 let createdEvent = touratte.createEvent();
 

@@ -4,6 +4,11 @@ class Renderer{
 
 	document.addEventListener("shout", function(event) {
 
+		 if (confirm("Do you want to reject this Event?")) {
+     		 event.preventDefault();
+     		 return false;
+    	 }
+
 		let div = document.createElement('div');
 
 		let authorId = '';
@@ -23,7 +28,7 @@ class Renderer{
  			document.body.appendChild(div);
  			listAuthors.push(authorToAdd);
  		}
- 		if(listAuthors.length >= 1){
+ 		if(listAuthors.length >= 1 && listAuthors.length < 3){
  			let isEqual = false;
 	 		for (var i = 0; i < listAuthors.length; i++) {
 	 			if (listAuthors[i].name == authorName) {
@@ -56,12 +61,8 @@ class Renderer{
 
 	getCountShout() {
 		let p = document.createElement('p');
-		p.innerHTML = 'The list of authors is: ' + countShouts;
+		p.innerHTML = 'The count of shout Events to create authorsList is (without first eventfrom tourattle.js): ' + countShouts;
 	 	document.body.appendChild(p);
-	}
-
-	stopEvent(event){
-		event.preventDefault();
 	}
 }
  let countShouts = 0;
@@ -73,11 +74,11 @@ renderer.renderEvent();
 function delay() {
 	return new Promise((resolve) => {
 			setTimeout(() => {
+				resolve();
 				renderer.getAuthorToAdd();
 				countShouts++;
 				console.log("listAuthors.length after PROMISE-------->" + listAuthors.length);
 				console.log("countShouts after PROMISE-------->" + countShouts);
-				resolve();
 				if (listAuthors.length < 3) {
 					return delay();
 				}
