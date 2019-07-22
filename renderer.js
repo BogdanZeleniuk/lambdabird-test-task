@@ -23,16 +23,22 @@ class Renderer{
 		let str = 'author is ' + JSON.stringify(event.detail.author) + 
  								'; text is ' + event.detail.text;
  		div.innerHTML = str;
+
+ 		document.body.appendChild(div);
+ 		
+ 		div.style.backgroundColor = 'green';
+
+ 		delayInside(div);
 	 	
  		if (listAuthors.length == 0) {
- 			document.body.appendChild(div);
  			listAuthors.push(authorToAdd);
  		}
- 		if(listAuthors.length >= 1 && listAuthors.length < 3){
+ 		else if(listAuthors.length >= 1){
  			let isEqual = false;
 	 		for (var i = 0; i < listAuthors.length; i++) {
 	 			if (listAuthors[i].name == authorName) {
 	 				isEqual = true;
+	 				document.body.removeChild(div);
 	 				break;
 	 			}
 	 			isEqual = false;
@@ -88,6 +94,15 @@ function delay() {
 					return;
 				}
 			}, 5002);
+	});
+}
+
+function delayInside(element) {
+	return new Promise((resolve) => {
+			setTimeout(() => {
+				resolve();
+				element.style.backgroundColor = 'white';
+			}, 1000);
 	});
 }
 
