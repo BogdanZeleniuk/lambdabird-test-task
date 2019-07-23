@@ -42,27 +42,52 @@ class Touratte {
         let event = new CustomEvent("shout", {
             detail: 
             {
-                author: touratte.getAuthor(authorsList),
-                text: touratte.getText(randomNumber)
+                author: this.getAuthor(authorsList),
+                text: this.getText(this.getRandomNumber())
             }
         });
         return event;
     }
 
-    getEvent(time, event){
+    fireEvent(time, event){
         setTimeout(function () {
             document.dispatchEvent(event);
         }, time * 1000); 
     };
+
+    buildAuthorsList(time) {
+        setTimeout(() => {
+            countShouts++;
+            if (listAuthors.length < 3) {
+                if (!isAlive) {
+                return;
+            }
+                this.fireEventIfIsNeeded();
+                return this.buildAuthorsList(time);
+            }
+        }, time);
+    }
+
+    fireEventIfIsNeeded() {
+            let touratteNext = new Touratte();
+            let randomIntervalNext = touratteNext.getRandomInterval(1, 5);
+            let createdEventNext = touratteNext.createEvent();
+            touratteNext.fireEvent(randomIntervalNext, createdEventNext);  
+    }
 }
 
-const touratte = new Touratte();
+let isAlive = true;
 
-let randomNumber = touratte.getRandomNumber();
+function startEventDispatching() {
+    let touratte = new Touratte();
+    let randomNumber = touratte.getRandomNumber();
+    let randomInterval = touratte.getRandomInterval(1, 5);
+    let createdEvent = touratte.createEvent();
+    isAlive = true;
+    touratte.fireEvent(randomInterval, createdEvent);
+    touratte.buildAuthorsList(5002);
+}
 
-const randomInterval = touratte.getRandomInterval(1, 5);
-
-let createdEvent = touratte.createEvent();
-
-touratte.getEvent(randomInterval, createdEvent);  
-
+function stopEventDispatching() {
+    isAlive = false;
+}
