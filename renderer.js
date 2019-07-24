@@ -16,50 +16,32 @@ class Renderer{
  		div.innerHTML = str;
 
  		div.style.backgroundColor = 'green';
+ 		div.style.fontSize = '20px';
 
  		document.body.appendChild(div);
 
- 		delayInside(div);
-	 	
- 		if (listAuthors.length == 0) {
- 			listAuthors.push(authorToAdd);
- 		}
- 		if(listAuthors.length >= 1 && listAuthors.length !== 3){
- 			let isEqual = false;
-	 		for (var i = 0; i < listAuthors.length; i++) {
-	 			if (listAuthors[i].name == authorName) {
-	 				isEqual = true;
-	 				break;
-	 			}
-	 			isEqual = false;
-	 		}
-	 		if (!isEqual) {
-			listAuthors.push(authorToAdd);
+ 		setTimeout(() => {
+		div.style.backgroundColor = 'white';
+		}, 1000);
+
+	 		for (let i = 0; i < authorsList.length; i++) {
+	 			if (authorName == authorsList[i].name) {
+	 				
+			if (!authorsList[i].hasOwnProperty('countShouts')) {
+				authorsList[i]['countShouts'] = 0;
 			}
+			
+			authorsList[i]['countShouts'] = authorsList[i]['countShouts'] + 1;
 	 	}
-	 	if (listAuthors.length == 3) {
-			let h1 = document.createElement('h1');
-			h1.innerHTML = 'The list of authors is: ' + JSON.stringify(listAuthors);
-	 		document.body.appendChild(h1);
-	 		
-	 		let p = document.createElement('p');
-			p.innerHTML = 'The count of shout Events to create authorsList is (without first eventfrom tourattle.js): ' + countShouts;
-	 		document.body.appendChild(p);
-		}
+	 }
+			let paragraph = document.createElement('p');
+			paragraph.innerHTML = JSON.stringify(authorsList);
+	 		document.body.appendChild(paragraph);
 
  		console.log(authorToAdd);				
   		}, false);
 	}
 }
 
-function delayInside(element) {
-	setTimeout(() => {
-		element.style.backgroundColor = 'white';
-	}, 1000);
-}
-
- let countShouts = 1;
- let listAuthors = [];
  const renderer = new Renderer();
-
  renderer.renderEvent();
